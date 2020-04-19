@@ -204,6 +204,12 @@ public class SignUp extends AppCompatActivity {
 
                     db_ref.updateChildren(info);
 
+                    signUpFullName.setText("");
+                    signUpUsername.setText("");
+                    signUpEmail.setText("");
+                    signUpMobileNumber.setText("");
+                    signUpPassword.setText("");
+
                     mProgressBar.setVisibility(View.GONE);
 
                     //create a Builder object
@@ -239,8 +245,9 @@ public class SignUp extends AppCompatActivity {
 
                                         //show message
                                         Toast.makeText(getApplicationContext(), "Verification Email Sent", Toast.LENGTH_SHORT).show();
-
+                                        FirebaseAuth.getInstance().signOut();
                                         startActivity(new Intent(SignUp.this,LoggedIn.class));
+
                                         finish();
 
 

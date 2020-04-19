@@ -24,4 +24,5 @@
     <string name="news_letters">News Letters</string>
     <string name="log_out">Log out</string>
     <string name="user_profile">User Profile</string>
+    <string name="login">LogIn</string>
 </resources>

@@ -23,6 +23,14 @@
             android:src="@drawable/spiritual"
             android:transitionName="home_image" />
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/log_in_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
@@ -116,13 +124,6 @@
 
         </LinearLayout>
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/log_in_progress_bar"
-            style="?android:attr/progressBarStyle"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
 
     </LinearLayout>
 
