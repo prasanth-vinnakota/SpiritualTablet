@@ -72,7 +72,68 @@ public class LoggedIn extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 if ((user != null)){
-                    startActivity(new Intent(getApplicationContext(),DashBoard.class));
+
+                    if (user.isEmailVerified()) {
+                        startActivity(new Intent(getApplicationContext(), DashBoard.class));
+                    }
+                    else {
+
+                        //create a Builder object
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoggedIn.this);
+
+                        //set title to builder
+                        builder.setTitle("Email is not verified");
+
+                        //set icon
+                        builder.setIcon(R.drawable.danger);
+
+                        //set message
+                        builder.setMessage("Your e-mail address "+ user.getEmail() + " is not verified, please verify your email address and login again");
+
+                        //set Button
+                        builder.setPositiveButton("send verification email", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                //set progress bar visible
+                                mProgressBar.setVisibility(View.VISIBLE);
+
+                                //send verification email
+                                Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification().addOnCompleteListener(LoggedIn.this, new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        //email send
+                                        if (task.isSuccessful()) {
+
+                                            //set progress bar gone
+                                            mProgressBar.setVisibility(View.GONE);
+
+                                            //show message
+                                            Toast.makeText(getApplicationContext(), "Verification Email Sent", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                        //email not sent
+                                        else{
+
+                                            //set progress bar gone
+                                            mProgressBar.setVisibility(View.GONE);
+
+                                            //show message
+                                            Toast.makeText(getApplicationContext(), "Error : " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+
+                        mProgressBar.setVisibility(View.GONE);
+
+                        //build and show builder
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                    }
                 }
             }
         };
@@ -198,8 +259,11 @@ public class LoggedIn extends AppCompatActivity {
                         //set icon
                         builder.setIcon(R.drawable.danger);
 
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
                         //set message
-                        builder.setMessage("Your e-mail address is not verified, please verify your email address and login again");
+                        assert user != null;
+                        builder.setMessage("Your e-mail address " + user.getEmail() + " is not verified, please verify your email address and login again");
 
                         //set Button
                         builder.setPositiveButton("send verification email", new DialogInterface.OnClickListener() {
