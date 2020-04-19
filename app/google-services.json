@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "632248555748",
+    "firebase_url": "https://spiritualtablet-b507c.firebaseio.com",
+    "project_id": "spiritualtablet-b507c",
+    "storage_bucket": "spiritualtablet-b507c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632248555748:android:f50b216b20f6037dba74f1",
+        "android_client_info": {
+          "package_name": "com.example.spiritualtablet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632248555748-4mah3rqssrs4f64lnbpqtnfs6has46rd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv0wv1FqFpwAO7ZjUksbwgikh1qlpbgZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632248555748-4mah3rqssrs4f64lnbpqtnfs6has46rd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
