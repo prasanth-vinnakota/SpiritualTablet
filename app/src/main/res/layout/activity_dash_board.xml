@@ -14,6 +14,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/full_logo"
+            android:layout_marginBottom="100dp"
+            android:layout_marginTop="20sp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="120sp"
@@ -81,7 +88,8 @@
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:drawableTop="@drawable/book"
-                    android:text="@string/books" />
+                    android:text="@string/books"
+                    android:onClick="openBooks"/>
 
             </com.google.android.material.card.MaterialCardView>
 

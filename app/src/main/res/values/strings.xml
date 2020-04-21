@@ -25,4 +25,10 @@
     <string name="log_out">Log out</string>
     <string name="user_profile">User Profile</string>
     <string name="login">LogIn</string>
+    <string name="no_internet_connection0">No Internet Connection</string>
+    <string name="retry">Retry</string>
+    <string name="telugu_books_list">Telugu Books List</string>
+    <string name="list">List</string>
+    <string name="english_books_list">English Books List</string>
+
 </resources>

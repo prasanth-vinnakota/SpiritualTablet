@@ -8,12 +8,16 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/spiritual"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/spiritual"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VerifyMobileNo"/>
+        <activity android:name=".EnglishBooksList"></activity>
+        <activity android:name=".ViewBook" />
+        <activity android:name=".TeluguBooksList" />
+        <activity android:name=".NoInternet" />
+        <activity android:name=".VerifyMobileNo" />
         <activity android:name=".DashBoard" />
         <activity android:name=".UserProfile" />
         <activity android:name=".SignUp" />

@@ -7,6 +7,8 @@ import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -141,6 +143,10 @@ public class LoggedIn extends AppCompatActivity {
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!checkInternetConnection())
+                    startActivity(new Intent(LoggedIn.this,NoInternet.class));
+
                 Intent intent = new Intent(LoggedIn.this, SignUp.class);
                 Pair[] pairs = new Pair[7];
 
@@ -161,6 +167,9 @@ public class LoggedIn extends AppCompatActivity {
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!checkInternetConnection())
+                    startActivity(new Intent(LoggedIn.this,NoInternet.class));
 
                 String email = Objects.requireNonNull(username.getText()).toString();
 
@@ -223,9 +232,11 @@ public class LoggedIn extends AppCompatActivity {
 
     public void loginUser(View view) {
 
-        if (!validateUsername() | !validatePassword()) {
+        if (!checkInternetConnection())
+            startActivity(new Intent(LoggedIn.this,NoInternet.class));
+
+        if (!validateUsername() | !validatePassword())
             return;
-        }
 
         mProgressBar.setVisibility(View.VISIBLE);
 
@@ -241,9 +252,9 @@ public class LoggedIn extends AppCompatActivity {
                     if (Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified()){
 
                         mProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(),"Logging in..",Toast.LENGTH_LONG).show();
 
                         Intent intent = new Intent(LoggedIn.this,DashBoard.class);
+                        Toast.makeText(getApplicationContext(),"Logging in..",Toast.LENGTH_LONG).show();
                         startActivity(intent);
 
                         finish();
@@ -323,12 +334,50 @@ public class LoggedIn extends AppCompatActivity {
 
     }
 
+    public boolean checkInternetConnection() {
+
+        //initialize connectivityManager to get the statuses of connectivity services
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+
+
+        NetworkInfo mobile_data = null;
+        NetworkInfo wifi = null;
+
+        //connectivityManager have statuses of connection services
+        if (connectivityManager != null) {
+
+            //get the status of mobile data
+            mobile_data = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            //get status of wifi
+            wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        }
+
+        //mobile data or wifi is connected
+        if ((mobile_data != null && mobile_data.isConnected()) || (wifi != null && wifi.isConnected())) {
+
+            //exit
+            return true;
+        }
+
+        //hide progress bar
+        mProgressBar.setVisibility(View.GONE);
+
+        //show toast message
+        Toast.makeText(LoggedIn.this, "No internet connection", Toast.LENGTH_SHORT).show();
+
+        return false;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
 
         //add firebaseAuthStateListener
+        if (checkInternetConnection())
         mAuth.addAuthStateListener(firebaseAuthListener);
+        else
+            startActivity(new Intent(LoggedIn.this,NoInternet.class));
     }
 
     @Override

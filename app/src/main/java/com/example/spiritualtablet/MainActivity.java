@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -38,20 +40,21 @@ public class MainActivity extends AppCompatActivity {
         imageView.setAnimation(topAnim);
         appName.setAnimation(bottomAnim);
 
-        //Going To Next Screen
-        int SPLASH_TIME_OUT = 4000;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this, LoggedIn.class);
-                Pair[] pairs = new Pair[2];
-                pairs[0] = new Pair<View,String>(imageView, "home_image");
-                pairs[1] = new Pair<View,String>(appName, "home_text");
 
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,pairs);
+            //Going To Next Screen
+            int SPLASH_TIME_OUT = 4000;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(MainActivity.this, LoggedIn.class);
+                    Pair[] pairs = new Pair[2];
+                    pairs[0] = new Pair<View, String>(imageView, "home_image");
+                    pairs[1] = new Pair<View, String>(appName, "home_text");
 
-                startActivity(intent,options.toBundle());
-            }
-        }, SPLASH_TIME_OUT);
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
+
+                    startActivity(intent, options.toBundle());
+                }
+            }, SPLASH_TIME_OUT);
     }
 }
