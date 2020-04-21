@@ -1,11 +1,11 @@
 package com.example.spiritualtablet;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,7 +18,6 @@ public class DashBoard extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_dash_board);
 
         logOut = findViewById(R.id.logout);
@@ -42,5 +41,33 @@ public class DashBoard extends AppCompatActivity {
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
+    }
+
+    public void openBooks(View view) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(DashBoard.this);
+
+        builder.setTitle("Select language");
+
+        builder.setIcon(R.drawable.book);
+
+        builder.setPositiveButton("Telugu", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                startActivity(new Intent(DashBoard.this, TeluguBooksList.class));
+            }
+        });
+
+        builder.setNegativeButton("English", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                startActivity(new Intent(DashBoard.this, EnglishBooksList.class));
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
