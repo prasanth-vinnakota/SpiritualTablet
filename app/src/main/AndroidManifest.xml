@@ -13,7 +13,10 @@
         android:roundIcon="@drawable/spiritual"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EnglishBooksList"></activity>
+        <activity android:name=".About"></activity>
+        <activity android:name=".Player" />
+        <activity android:name=".AudioActivity" />
+        <activity android:name=".EnglishBooksList" />
         <activity android:name=".ViewBook" />
         <activity android:name=".TeluguBooksList" />
         <activity android:name=".NoInternet" />

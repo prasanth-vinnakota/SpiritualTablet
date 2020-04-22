@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AudioActivity">
+
+    <ImageView
+        android:id="@+id/audio_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/full_logo"/>
+
+    <TextView
+        android:id="@+id/audio_tv"
+        android:layout_below="@+id/audio_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/telugu_audio_list"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"/>
+
+    <ListView
+        android:id="@+id/audio_list"
+        android:layout_below="@+id/audio_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/darker_gray"
+        android:padding="10dp" />
+
+    <com.example.jean.jcplayer.view.JcPlayerView
+        android:layout_alignParentBottom="true"
+        android:id="@+id/jc_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+</RelativeLayout>

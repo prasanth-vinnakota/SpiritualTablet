@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 public class DashBoard extends AppCompatActivity {
 
@@ -69,5 +70,14 @@ public class DashBoard extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void playMusic(View view) {
+        startActivity(new Intent(DashBoard.this,AudioActivity.class));
+    }
+
+    public void about(View view) {
+
+        startActivity(new Intent(this, About.class));
     }
 }
