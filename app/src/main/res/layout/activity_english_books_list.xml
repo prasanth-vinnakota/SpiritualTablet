@@ -5,11 +5,13 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".TeluguBooksList">
+    tools:context=".TeluguBooksList"
+    android:background="@drawable/gradient_background">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/full_logo"/>
 
     <TextView
@@ -26,6 +28,8 @@
         android:id="@+id/english_books_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:choiceMode="singleChoice"
+        android:listSelector="@color/colorPrimaryDark"
         android:padding="10dp"/>
 
 

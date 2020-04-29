@@ -4,21 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".DashBoard">
+    tools:context=".DashBoard"
+    android:background="@drawable/gradient_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:src="@drawable/full_logo"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="50dp"
             android:layout_marginTop="20sp"/>
 
         <LinearLayout
@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFF">
+                app:cardBackgroundColor="#DFDFDA">
 
                 <Button
                     android:id="@+id/audio"
@@ -53,10 +53,11 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFF">
+                app:cardBackgroundColor="#DFDFDA">
 
                 <Button
                     android:id="@+id/video"
+                    android:onClick="loadVideo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -80,7 +81,7 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFF">
+                app:cardBackgroundColor="#DFDFDA">
 
                 <Button
                     android:id="@+id/books"
@@ -100,7 +101,7 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFF">
+                app:cardBackgroundColor="#DFDFDA">
 
                 <Button
                     android:id="@+id/news_letters"
@@ -108,8 +109,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
-                    android:drawableTop="@drawable/letter"
-                    android:text="@string/news_letters" />
+                    android:drawableTop="@drawable/donate"
+                    android:text="@string/donate"
+                    android:onClick="donate"/>
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -128,15 +130,16 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFF">
+                app:cardBackgroundColor="#DFDFDA">
 
                 <Button
-                    android:id="@+id/logout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
-                    android:text="@string/log_out" />
+                    android:drawableTop="@drawable/contact_us"
+                    android:text="@string/contact_us"
+                    android:onClick="contactUs"/>
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -146,18 +149,47 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFF">
+                app:cardBackgroundColor="#DFDFDA">
 
                 <Button
-                    android:id="@+id/user_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/about_us"
                     android:text="@string/about_us"
                     android:onClick="about"/>
 
             </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120sp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#DFDFDA">
+
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/logout"
+                    android:text="@string/log_out" />
+
+            </com.google.android.material.card.MaterialCardView>
+
 
         </LinearLayout>
 
