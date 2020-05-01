@@ -25,7 +25,7 @@ import java.net.URL;
 
 public class ViewBook extends AppCompatActivity {
 
-    private PDFView pdfView;
+    private static PDFView pdfView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class ViewBook extends AppCompatActivity {
 
         pdfView = findViewById(R.id.pdf_view);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Books").child(getIntent().getStringExtra("language")).child(getIntent().getStringExtra("book_no"));
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Books").child(getIntent().getStringExtra("language")).child(getIntent().getStringExtra("book_name"));
 
         Toast.makeText(getApplicationContext(), "Loading "+getIntent().getStringExtra("book_name"),Toast.LENGTH_LONG).show();
 
@@ -53,7 +53,7 @@ public class ViewBook extends AppCompatActivity {
         });
     }
 
-    class RetrievePdfStream extends AsyncTask<String, Void, InputStream> {
+    static class RetrievePdfStream extends AsyncTask<String, Void, InputStream> {
 
         @Override
         protected InputStream doInBackground(String... strings) {

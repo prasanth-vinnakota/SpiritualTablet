@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SpiritualTablets</string>
+    <string name="app_name">Spiritual Tablets</string>
     <string name="hello_there">HELLO THERE! WELCOME BACK</string>
     <string name="log_in_to_continue">Log in to continue</string>
     <string name="username">Username</string>
@@ -147,5 +147,12 @@
     <string name="_9933267030">9933267030</string>
     <string name="admission_centers">Admission Centers</string>
     <string name="holistic_centers">Holistic Centers</string>
+    <string name="research_foundation">Research Foundation</string>
+    <string name="gallery">Gallery</string>
+    <string name="spiritual_tablets_workshop_at_kadtal">Spiritual Tablets Workshop at Kadtal</string>
+    <string name="spiritual_tablets_workshop_in_soul_trends">Spiritual Tablets Workshop in Soul Trends</string>
+    <string name="spiritual_tablets_workshop_at_madugulla">Spiritual tablets workshop at Madugulla</string>
+    <string name="unknown_gallery_name">Unknown Gallery Name</string>
+    <string name="book_title">Book Title</string>
 
 </resources>

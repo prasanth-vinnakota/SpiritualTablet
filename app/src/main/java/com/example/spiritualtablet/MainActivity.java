@@ -1,6 +1,5 @@
 package com.example.spiritualtablet;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
@@ -15,20 +14,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
     //Variables for anim
     Animation topAnim, bottomAnim;
-    ImageView imageView;
-    TextView appName;
+    TextView appName, appName2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
         bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
 
         //Views
-        imageView = findViewById(R.id.imageView);
+        appName2 = findViewById(R.id.textView2);
         appName = findViewById(R.id.textView);
 
         //Setting Animation
-        imageView.setAnimation(topAnim);
-        appName.setAnimation(bottomAnim);
+        appName.setAnimation(topAnim);
+        appName2.setAnimation(bottomAnim);
 
 
             //Going To Next Screen
@@ -64,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     Intent intent = new Intent(MainActivity.this, LoggedIn.class);
                     Pair[] pairs = new Pair[2];
-                    pairs[0] = new Pair<View, String>(imageView, "home_image");
-                    pairs[1] = new Pair<View, String>(appName, "home_text");
+                    pairs[0] = new Pair<View, String>(appName, "home_image");
+                    pairs[1] = new Pair<View, String>(appName2, "home_text");
 
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
 

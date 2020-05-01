@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ public class Player extends AppCompatActivity {
 
 
     TextView songName, totalDuration, currentPosition;
-    ImageView playOrPause;
+    ImageView playOrPause, bookImage;
     SeekBar seekBar;
     MediaPlayer mediaPlayer;
     Handler handler = new Handler();
@@ -36,11 +35,13 @@ public class Player extends AppCompatActivity {
         currentPosition = findViewById(R.id.timer);
 
         playOrPause = findViewById(R.id.play_pause);
+        bookImage = findViewById(R.id.audio_image_view);
 
         seekBar = findViewById(R.id.seek_bar);
 
         mediaPlayer = new MediaPlayer();
         songName.setText(getIntent().getStringExtra("song_name"));
+        bookImage.setImageResource(getIntent().getIntExtra("image",0));
 
         playOrPause.setOnClickListener(new View.OnClickListener() {
             @Override

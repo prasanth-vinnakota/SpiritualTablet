@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".LoadVideo"
+    tools:context=".VideoList"
     android:background="@drawable/gradient_background">
 
     <ImageView
@@ -22,16 +22,10 @@
         android:gravity="center"
         android:layout_marginTop="20dp"/>
 
-    <com.google.android.youtube.player.YouTubePlayerView
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/youtube_view"/>
-
     <ListView
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        android:id="@+id/youtube_video_list"
+        android:id="@+id/video_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"

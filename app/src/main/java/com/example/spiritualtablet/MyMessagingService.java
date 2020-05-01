@@ -1,6 +1,5 @@
 package com.example.spiritualtablet;
 
-import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;

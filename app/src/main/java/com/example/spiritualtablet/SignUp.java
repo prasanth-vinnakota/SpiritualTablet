@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,7 +22,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -35,11 +33,8 @@ public class SignUp extends AppCompatActivity {
     Button login, signUp;
     ImageView signUpImage;
     TextView signUpText, signUpSlogan;
-    TextInputEditText signUpFullName, signUpUsername, signUpEmail, signUpMobileNumber, signUpPassword;
+    TextInputEditText signUpFullName, signUpEmail, signUpMobileNumber, signUpPassword;
     ProgressBar mProgressBar;
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
-
     private FirebaseAuth mAuth;
 
     @Override
@@ -58,7 +53,6 @@ public class SignUp extends AppCompatActivity {
         signUpSlogan = findViewById(R.id.sign_up_slogan);
 
         signUpFullName = findViewById(R.id.sign_up_full_name);
-        signUpUsername = findViewById(R.id.sign_up_user_name);
         signUpEmail = findViewById(R.id.sign_up_email);
         signUpMobileNumber = findViewById(R.id.sign_up_mobile_no);
         signUpPassword = findViewById(R.id.sign_up_password);
@@ -73,7 +67,7 @@ public class SignUp extends AppCompatActivity {
                 pairs[0] = new Pair<View, String>(signUpImage, "home_image");
                 pairs[1] = new Pair<View, String>(signUpText, "home_text");
                 pairs[2] = new Pair<View, String>(signUpSlogan, "login_desc");
-                pairs[3] = new Pair<View, String>(signUpUsername, "login_mobile_number");
+                pairs[3] = new Pair<View, String>(signUpMobileNumber, "login_mobile_number");
                 pairs[4] = new Pair<View, String>(signUpPassword, "login_password");
                 pairs[5] = new Pair<View, String>(signUp, "login_go_button");
                 pairs[6] = new Pair<View, String>(login, "login_sign_up");
@@ -93,23 +87,6 @@ public class SignUp extends AppCompatActivity {
             return false;
         } else {
             signUpFullName.setError(null);
-            return true;
-        }
-    }
-
-    private boolean validateUserName() {
-
-        String userName = Objects.requireNonNull(signUpUsername.getText()).toString();
-
-        if (userName.isEmpty()) {
-            signUpUsername.setError("Field cannot be empty");
-            return false;
-        } else if (userName.length() > 25) {
-            signUpUsername.setError("Username too long");
-            return false;
-
-        } else {
-            signUpUsername.setError(null);
             return true;
         }
     }
@@ -170,12 +147,11 @@ public class SignUp extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
 
         //show error
-        if (!validateUserName() | !validateFullName() | !validateEmail() | !validateMobileNo() | !validatePassword()) {
+        if (!validateFullName() | !validateEmail() | !validateMobileNo() | !validatePassword()) {
             return;
         }
 
         final String fullName = Objects.requireNonNull(signUpFullName.getText()).toString();
-        final String userName = Objects.requireNonNull(signUpUsername.getText()).toString();
         final String email = Objects.requireNonNull(signUpEmail.getText()).toString();
         final String mobileNo = Objects.requireNonNull(signUpMobileNumber.getText()).toString();
         String password = Objects.requireNonNull(signUpPassword.getText()).toString();
@@ -197,15 +173,12 @@ public class SignUp extends AppCompatActivity {
                     HashMap<String, Object> info = new HashMap<>();
 
                     info.put("full_name", fullName);
-                    info.put("user_name", userName);
                     info.put("email", email);
                     info.put("mobile_no", mobileNo);
-                    info.put("premium","no");
 
                     db_ref.updateChildren(info);
 
                     signUpFullName.setText("");
-                    signUpUsername.setText("");
                     signUpEmail.setText("");
                     signUpMobileNumber.setText("");
                     signUpPassword.setText("");

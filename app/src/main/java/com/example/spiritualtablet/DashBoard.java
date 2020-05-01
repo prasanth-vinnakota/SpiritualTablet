@@ -9,20 +9,22 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 
 public class DashBoard extends AppCompatActivity {
 
     Button logOut;
+    ProgressBar mProgressBar;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
+
+        mProgressBar = findViewById(R.id.dash_board_progressbar);
 
         logOut = findViewById(R.id.logout);
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +61,8 @@ public class DashBoard extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                startActivity(new Intent(DashBoard.this, TeluguBooksList.class));
+                Toast.makeText(DashBoard.this, "Please wait books are loading...",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(DashBoard.this, TeluguBookList.class));
             }
         });
 
@@ -67,7 +70,8 @@ public class DashBoard extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                startActivity(new Intent(DashBoard.this, EnglishBooksList.class));
+                Toast.makeText(DashBoard.this, "Please wait books are loading...",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(DashBoard.this, EnglishBookList.class));
             }
         });
 
@@ -86,7 +90,13 @@ public class DashBoard extends AppCompatActivity {
 
     public void loadVideo(View view) {
 
-        startActivity(new Intent(this, LoadVideo.class));
+        AlertDialog.Builder builder = new AlertDialog.Builder(DashBoard.this);
+
+        builder.setTitle("No Videos Available");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+       // startActivity(new Intent(this, VideoList.class));
     }
 
     public boolean checkInternetConnection() {
@@ -125,7 +135,7 @@ public class DashBoard extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(DashBoard.this);
 
         builder.setTitle("Through");
-        builder.setMessage("UPI : something@somebank\nPhone pe : 0000000000\nGoogle pay : 0000000000\nAccount no : 0000000000\nIFSC CODE : BANK0000000\nBranch : Somewhere");
+        builder.setMessage("ICICI Bank A/c No - 006001034726\nIFSC Code - ICIC0000060\nBranch - Dwaraka Nagar\n\nAndhra Bank A/c No - 035111100002555\n IFSC Code - ANDB0000351\nBranch - Maharanipeta");
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -134,5 +144,10 @@ public class DashBoard extends AppCompatActivity {
     public void contactUs(View view) {
 
         startActivity(new Intent(this, ContactUs.class));
+    }
+
+    public void gallery(View view) {
+
+        startActivity(new Intent(this, Gallery.class));
     }
 }

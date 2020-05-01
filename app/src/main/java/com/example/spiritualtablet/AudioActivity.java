@@ -1,73 +1,59 @@
 package com.example.spiritualtablet;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.jean.jcplayer.model.JcAudio;
-import com.example.jean.jcplayer.view.JcPlayerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AudioActivity extends AppCompatActivity {
 
-    ListView audioList;
-    ArrayList<String> audioFileList;
-    String url;
+    List<DataItem> lstDataItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
+        lstDataItem = new ArrayList<>();
 
-        audioList = findViewById(R.id.audio_list);
 
-        audioFileList = new ArrayList<>();
+        lstDataItem.add(new DataItem("Dhyanam", "Audios", R.drawable.dhyanam));
+        lstDataItem.add(new DataItem("Nissahayata", "Audios", R.drawable.nissahayatha));
+        lstDataItem.add(new DataItem("Arishadvargalu", "Audios", R.drawable.arishadvargaalu));
+        lstDataItem.add(new DataItem("Aadhyathmika Putrulu", "Audios", R.drawable.adyatmika_putrulu));
+        lstDataItem.add(new DataItem("Aacharya Saangatyam", "Audios", R.drawable.acharya_sangatyam));
+        lstDataItem.add(new DataItem("Nalugu Setruvulu", "Audios", R.drawable.nalugu_setruvulu));
+        lstDataItem.add(new DataItem("Manchi Kashtalu", "Audios", R.drawable.audio_cover_page));
+        lstDataItem.add(new DataItem("Jeevitha Dhyeyam", "Audios", R.drawable.audio_cover_page));
+        lstDataItem.add(new DataItem("Garbaasayam 1", "Audios", R.drawable.audio_cover_page));
+        lstDataItem.add(new DataItem("Garbaasayam 2", "Audios", R.drawable.audio_cover_page));
+        lstDataItem.add(new DataItem("Garbaasayam 3", "Audios", R.drawable.audio_cover_page));
+        lstDataItem.add(new DataItem("Garbaasayam 4", "Audios", R.drawable.audio_cover_page));
+        lstDataItem.add(new DataItem("Garbaasayam 4", "Audios", R.drawable.audio_cover_page));
+        lstDataItem.add(new DataItem("G K Sir Speech", "Audios", R.drawable.audio_cover_page));
+        lstDataItem.add(new DataItem("Aathma Kutumba Dharmam", "Audios", R.drawable.audio_cover_page));
 
-        audioFileList.add("Nissahayata");
-        audioFileList.add("Manchi Kashtalu");
-        audioFileList.add("Jeevitha Dhyeyam");
-        audioFileList.add("Garbaasayam-1");
-        audioFileList.add("Garbaasayam-2");
-        audioFileList.add("Garbaasayam-3");
-        audioFileList.add("Garbaasayam-4");
-        audioFileList.add("G.K Sir Speech");
-        audioFileList.add("Dhyanam");
-        audioFileList.add("Aathma Kutumba Dharmam");
-        audioFileList.add("Arishadvargalu");
-        audioFileList.add("Aadhyathmika Putrulu");
-        audioFileList.add("Aacharya Saangatyam");
-        audioFileList.add("Nalugu Setruvulu");
 
-        ArrayAdapter audioListAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, audioFileList);
+        RecyclerView myrv = findViewById(R.id.audio_recycler_view_id);
+        AudioRecyclerViewAdapter myAdapter = new AudioRecyclerViewAdapter(getApplicationContext(),lstDataItem);
+        myrv.setLayoutManager(new GridLayoutManager(getApplicationContext(),3));
+        myrv.setAdapter(myAdapter);
 
-        audioList.setAdapter(audioListAdapter);
 
-        audioList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      /*  audioList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
@@ -78,7 +64,7 @@ public class AudioActivity extends AppCompatActivity {
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        url = dataSnapshot.getValue(String.class);
+                        String url = dataSnapshot.getValue(String.class);
                         Intent i = new Intent(AudioActivity.this, Player.class);
                         i.putExtra("url",url);
                         i.putExtra("song_name", audioFileList.get(position));
@@ -93,7 +79,7 @@ public class AudioActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        }); */
     }
 }
 
