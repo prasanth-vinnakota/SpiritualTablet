@@ -9,35 +9,22 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.spiritualtablet.dashboard.AudioActivity;
+import com.example.spiritualtablet.dashboard.EnglishBookList;
+import com.example.spiritualtablet.dashboard.Gallery;
+import com.example.spiritualtablet.dashboard.NewsLetters;
+import com.example.spiritualtablet.dashboard.TeluguBookList;
+import com.example.spiritualtablet.dashboard.VideoList;
+
 
 public class DashBoard extends AppCompatActivity {
 
-    Button logOut;
-    ProgressBar mProgressBar;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
-
-        mProgressBar = findViewById(R.id.dash_board_progressbar);
-
-        logOut = findViewById(R.id.logout);
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), LoggedIn.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
     }
 
     //this method shuts application when back is pressed
@@ -61,8 +48,11 @@ public class DashBoard extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Toast.makeText(DashBoard.this, "Please wait books are loading...",Toast.LENGTH_LONG).show();
+                //Toast.makeText(DashBoard.this, "Please wait books are loading...",Toast.LENGTH_LONG).show();
+                LoadingDialog loadingDialog = new LoadingDialog(DashBoard.this);
+                loadingDialog.startLoading();
                 startActivity(new Intent(DashBoard.this, TeluguBookList.class));
+                loadingDialog.dismiss();
             }
         });
 
@@ -70,8 +60,11 @@ public class DashBoard extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Toast.makeText(DashBoard.this, "Please wait books are loading...",Toast.LENGTH_LONG).show();
+                //Toast.makeText(DashBoard.this, "Please wait books are loading...",Toast.LENGTH_LONG).show();
+                LoadingDialog loadingDialog = new LoadingDialog(DashBoard.this);
+                loadingDialog.startLoading();
                 startActivity(new Intent(DashBoard.this, EnglishBookList.class));
+                loadingDialog.dismiss();
             }
         });
 
@@ -80,23 +73,18 @@ public class DashBoard extends AppCompatActivity {
     }
 
     public void playMusic(View view) {
-        startActivity(new Intent(DashBoard.this,AudioActivity.class));
-    }
-
-    public void about(View view) {
-
-        startActivity(new Intent(this, About.class));
+        startActivity(new Intent(DashBoard.this, AudioActivity.class));
     }
 
     public void loadVideo(View view) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(DashBoard.this);
+     /*   AlertDialog.Builder builder = new AlertDialog.Builder(DashBoard.this);
 
         builder.setTitle("No Videos Available");
         AlertDialog dialog = builder.create();
-        dialog.show();
+        dialog.show();*/
 
-       // startActivity(new Intent(this, VideoList.class));
+        startActivity(new Intent(this, VideoList.class));
     }
 
     public boolean checkInternetConnection() {
@@ -131,23 +119,16 @@ public class DashBoard extends AppCompatActivity {
             startActivity(new Intent(this, NoInternet.class));
     }
 
-    public void donate(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(DashBoard.this);
-
-        builder.setTitle("Through");
-        builder.setMessage("ICICI Bank A/c No - 006001034726\nIFSC Code - ICIC0000060\nBranch - Dwaraka Nagar\n\nAndhra Bank A/c No - 035111100002555\n IFSC Code - ANDB0000351\nBranch - Maharanipeta");
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    public void contactUs(View view) {
-
-        startActivity(new Intent(this, ContactUs.class));
-    }
-
     public void gallery(View view) {
 
         startActivity(new Intent(this, Gallery.class));
+    }
+
+    public void newsLetters(View view) {
+        startActivity(new Intent(this, NewsLetters.class));
+    }
+
+    public void more(View view) {
+        startActivity(new Intent(this, DashBoard2.class));
     }
 }

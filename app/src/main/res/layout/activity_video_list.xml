@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".VideoList"
+    tools:context=".dashboard.VideoList"
     android:background="@drawable/gradient_background">
 
     <ImageView

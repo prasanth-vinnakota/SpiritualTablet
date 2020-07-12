@@ -9,7 +9,7 @@
     android:paddingEnd="20dp"
     android:paddingBottom="30dp"
     android:background="@drawable/gradient_background"
-    tools:context=".Outlets">
+    tools:context=".about.Outlets">
 
     <LinearLayout
         android:layout_width="match_parent"

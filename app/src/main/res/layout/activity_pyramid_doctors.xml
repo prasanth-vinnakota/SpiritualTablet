@@ -8,7 +8,7 @@
     android:paddingTop="30dp"
     android:paddingStart="20dp"
     android:background="@drawable/gradient_background"
-    tools:context=".PyramidDoctors">
+    tools:context=".about.PyramidDoctors">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,11 +1,12 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background"
     android:orientation="vertical"
-    android:weightSum="10">
+    android:weightSum="10"
+    tools:context=".dashboard.About">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,7 +50,7 @@
                 android:background="@android:color/transparent"
                 android:id="@+id/introduction"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:onClick="introduction"
                 android:text="@string/introduction" />
@@ -70,7 +71,7 @@
                 android:background="@android:color/transparent"
                 android:id="@+id/history"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:onClick="history"
                 android:text="@string/history_origin" />
@@ -91,7 +92,7 @@
                 android:background="@android:color/transparent"
                 android:id="@+id/principle"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:onClick="principle"
                 android:text="@string/principle" />
@@ -112,7 +113,7 @@
                 android:background="@android:color/transparent"
                 android:id="@+id/pyramid_doctors"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:onClick="pyramidDoctors"
                 android:text="@string/pyramid_doctors" />
@@ -133,7 +134,7 @@
                 android:background="@android:color/transparent"
                 android:id="@+id/outlets"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:onClick="outlets"
                 android:text="@string/outlets" />
@@ -153,34 +154,13 @@
             <Button
                 android:background="@android:color/transparent"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:onClick="founder"
                 android:text="@string/founder" />
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:visibility="gone"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
-            <Button
-                android:background="@android:color/transparent"
-                android:id="@+id/founder"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:onClick="founder"
-                android:text="@string/founder" />
-
-        </com.google.android.material.card.MaterialCardView>
 
     </GridLayout>
 

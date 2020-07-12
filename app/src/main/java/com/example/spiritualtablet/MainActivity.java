@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Views
         appName2 = findViewById(R.id.textView2);
-        appName = findViewById(R.id.textView);
+        appName = findViewById(R.id.nav_user_email);
 
         //Setting Animation
         appName.setAnimation(topAnim);

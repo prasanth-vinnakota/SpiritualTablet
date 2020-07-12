@@ -8,7 +8,7 @@
     android:paddingStart="20sp"
     android:paddingEnd="20sp"
     android:paddingBottom="30dp"
-    tools:context=".Principle"
+    tools:context=".about.Principle"
     android:background="@drawable/gradient_background">
 
 

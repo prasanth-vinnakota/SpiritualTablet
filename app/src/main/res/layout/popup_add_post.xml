@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF">
+
+    <ImageView
+        android:id="@+id/popup_close"
+        android:layout_marginTop="10dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/close"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#000"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:background="#FFFFFF"
+        android:id="@+id/popup_user_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/userphoto"/>
+
+
+        <EditText
+            android:background="@drawable/popup_edittext_style"
+            android:id="@+id/popup_description"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textCapSentences"
+            android:hint="@string/description"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:id="@+id/popup_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|center"
+        android:src="@drawable/ic_add_to_photos_black_24dp" />
+
+    <Button
+        android:id="@+id/popup_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/post"
+        android:layout_gravity="end"
+        android:background="#ADD8E6"
+        android:layout_marginEnd="20dp"
+        android:enabled="false"/>
+
+</LinearLayout>

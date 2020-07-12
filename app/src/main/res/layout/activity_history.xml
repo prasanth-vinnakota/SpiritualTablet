@@ -8,7 +8,7 @@
     android:paddingStart="20dp"
     android:paddingEnd="20dp"
     android:paddingBottom="30dp"
-    tools:context=".History"
+    tools:context=".about.History"
     android:background="@drawable/gradient_background">
 
     <LinearLayout

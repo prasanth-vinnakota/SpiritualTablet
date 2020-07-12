@@ -1,12 +1,21 @@
 package com.example.spiritualtablet;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -18,12 +27,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -31,11 +48,13 @@ import java.util.Objects;
 public class SignUp extends AppCompatActivity {
 
     Button login, signUp;
-    ImageView signUpImage;
+    ImageView signUpImage, imgUserPhoto;
     TextView signUpText, signUpSlogan;
     TextInputEditText signUpFullName, signUpEmail, signUpMobileNumber, signUpPassword;
     ProgressBar mProgressBar;
     private FirebaseAuth mAuth;
+    static int REQUEST_CODE = 1;
+    Uri pickedImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +62,13 @@ public class SignUp extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_up);
 
-
         login = findViewById(R.id.sign_up_login);
         signUp = findViewById(R.id.sign_up);
 
         mProgressBar = findViewById(R.id.sign_up_progress_bar);
 
         signUpImage = findViewById(R.id.sign_up_image);
+        imgUserPhoto = findViewById(R.id.user_image);
         signUpSlogan = findViewById(R.id.sign_up_slogan);
 
         signUpFullName = findViewById(R.id.sign_up_full_name);
@@ -58,6 +77,21 @@ public class SignUp extends AppCompatActivity {
         signUpPassword = findViewById(R.id.sign_up_password);
 
         signUpText = findViewById(R.id.sign_up_text);
+
+        imgUserPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CropImage.startPickImageActivity(SignUp.this);
+               /* if (Build.VERSION.SDK_INT >= 22) {
+
+                    checkAndRequestForPermissions();
+                } else {
+                    openGallery();
+                }*/
+            }
+        });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +111,67 @@ public class SignUp extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void openGallery() {
+
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, REQUEST_CODE);
+    }
+
+    private void checkAndRequestForPermissions() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                Toast.makeText(this, "Please accept required permissions", Toast.LENGTH_LONG).show();
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
+            }
+        } else {
+            openGallery();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE
+                && resultCode == Activity.RESULT_OK) {
+            pickedImageUrl = CropImage.getPickImageResultUri(this, data);
+            if (CropImage.isReadExternalStoragePermissionsRequired(this, pickedImageUrl)) {
+                Uri uri = pickedImageUrl;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+                }
+            } else {
+                startCrop(pickedImageUrl);
+            }
+        }
+       /* if (resultCode == RESULT_OK && requestCode == REQUEST_CODE && data != null) {
+
+            pickedImageUrl = data.getData();
+            imgUserPhoto.setImageURI(pickedImageUrl);
+        }*/
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                imgUserPhoto.setImageURI(result.getUri());
+            }
+        }
+    }
+
+    private void startCrop(Uri pickedImageUrl) {
+
+        CropImage.activity(pickedImageUrl)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
     }
 
     private boolean validateFullName() {
@@ -147,7 +242,8 @@ public class SignUp extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
 
         //show error
-        if (!validateFullName() | !validateEmail() | !validateMobileNo() | !validatePassword()) {
+        if (!validateFullName() | !validateEmail() | !validateMobileNo() | !validatePassword() | !validateImage()) {
+            mProgressBar.setVisibility(View.GONE);
             return;
         }
 
@@ -163,108 +259,157 @@ public class SignUp extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()) {
-                    String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                    final String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
                     reference.setValue(true);
 
-                    DatabaseReference db_ref = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
-                    HashMap<String, Object> info = new HashMap<>();
-
-                    info.put("full_name", fullName);
-                    info.put("email", email);
-                    info.put("mobile_no", mobileNo);
-
-                    db_ref.updateChildren(info);
-
-                    signUpFullName.setText("");
-                    signUpEmail.setText("");
-                    signUpMobileNumber.setText("");
-                    signUpPassword.setText("");
-
-                    mProgressBar.setVisibility(View.GONE);
-
-                    //create a Builder object
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SignUp.this);
-
-                    //set builder title
-                    builder.setTitle("Registered Successfully");
-
-                    //set builder icon
-                    builder.setIcon(R.drawable.success);
-
-                    //set message
-                    builder.setMessage("You have to verify your email address, and login with your credentials");
-
-                    //set Button
-                    builder.setPositiveButton("send verification email", new DialogInterface.OnClickListener() {
+                    StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("user_photos");
+                    final StorageReference imageFilePath = mStorage.child(Objects.requireNonNull(pickedImageUrl.getLastPathSegment()));
+                    imageFilePath.putFile(pickedImageUrl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
 
-                            //set progress bar visible
-                            mProgressBar.setVisibility(View.VISIBLE);
-
-                            //send verification email
-                            mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(SignUp.this, new OnCompleteListener<Void>() {
+                            imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                                public void onSuccess(Uri uri) {
 
-                                    //email send
-                                    if (task.isSuccessful()) {
-
-                                        //set progress bar gone
-                                        mProgressBar.setVisibility(View.GONE);
-
-                                        //show message
-                                        Toast.makeText(getApplicationContext(), "Verification Email Sent", Toast.LENGTH_SHORT).show();
-                                        FirebaseAuth.getInstance().signOut();
-                                        startActivity(new Intent(SignUp.this,LoggedIn.class));
-
-                                        finish();
+                                    UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(fullName)
+                                            .setPhotoUri(uri)
+                                            .build();
 
 
-                                    }
-                                    //email not sent
-                                    else{
+                                    mAuth.getCurrentUser().updateProfile(profileUpdate)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
 
-                                        //set progress bar gone
-                                        mProgressBar.setVisibility(View.GONE);
+                                                    if (task.isSuccessful()) {
 
-                                        //show message
-                                        Toast.makeText(getApplicationContext(), "Error : " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
-                                    }
+                                                        DatabaseReference db_ref = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+
+                                                        final HashMap<String, Object> info = new HashMap<>();
+
+                                                        info.put("full_name", fullName);
+                                                        info.put("email", email);
+                                                        info.put("mobile_no", mobileNo);
+                                                        if (taskSnapshot.getMetadata() != null && taskSnapshot.getMetadata().getReference() != null) {
+
+                                                            taskSnapshot.getMetadata().getReference().getDownloadUrl()
+                                                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                                        @Override
+                                                                        public void onSuccess(Uri uri) {
+
+                                                                            info.put("user_image", uri.toString());
+                                                                        }
+                                                                    });
+                                                        }
+
+                                                        db_ref.updateChildren(info);
+
+                                                        signUpFullName.setText("");
+                                                        signUpEmail.setText("");
+                                                        signUpMobileNumber.setText("");
+                                                        signUpPassword.setText("");
+                                                        signUpImage.setImageURI(null);
+
+                                                        mProgressBar.setVisibility(View.GONE);
+
+                                                        //create a Builder object
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(SignUp.this);
+
+                                                        //set builder title
+                                                        builder.setTitle("Registered Successfully");
+
+                                                        //set builder icon
+                                                        builder.setIcon(R.drawable.success);
+
+                                                        //set message
+                                                        builder.setMessage("You have to verify your email address, and login with your credentials");
+
+                                                        //set Button
+                                                        builder.setPositiveButton("send verification email", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                                //set progress bar visible
+                                                                mProgressBar.setVisibility(View.VISIBLE);
+
+                                                                //send verification email
+                                                                mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(SignUp.this, new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                                                        //email send
+                                                                        if (task.isSuccessful()) {
+
+                                                                            //set progress bar gone
+                                                                            mProgressBar.setVisibility(View.GONE);
+
+                                                                            //show message
+                                                                            Toast.makeText(getApplicationContext(), "Verification Email Sent", Toast.LENGTH_SHORT).show();
+                                                                            FirebaseAuth.getInstance().signOut();
+                                                                            startActivity(new Intent(SignUp.this, LoggedIn.class));
+
+                                                                            finish();
+
+
+                                                                        }
+                                                                        //email not sent
+                                                                        else {
+
+                                                                            //set progress bar gone
+                                                                            mProgressBar.setVisibility(View.GONE);
+
+                                                                            //show message
+                                                                            Toast.makeText(getApplicationContext(), "Error : " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                                                                        }
+                                                                    }
+
+                                                                    ;
+                                                                });
+                                                            }
+                                                        });
+
+                                                        mProgressBar.setVisibility(View.GONE);
+
+                                                        AlertDialog dialog = builder.create();
+                                                        dialog.show();
+
+                                                    } else {
+
+                                                        mProgressBar.setVisibility(View.GONE);
+
+
+                                                        Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+                                            });
                                 }
                             });
+
                         }
-                    });
-
-                    mProgressBar.setVisibility(View.GONE);
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-
-                }else {
-
-                    mProgressBar.setVisibility(View.GONE);
-
-
-                    Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    mProgressBar.setVisibility(View.GONE);
+                                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
                 }
             }
-
-        /*Intent intent = new Intent(getApplicationContext(), VerifyMobileNo.class);
-        intent.putExtra("fullName",fullName);
-        intent.putExtra("userName",userName);
-        intent.putExtra("email",email);
-        intent.putExtra("mobileNo",mobileNo);
-        intent.putExtra("password",password);
-
-        startActivity(intent);*/
-
-
         });
+    }
 
+    private boolean validateImage() {
+        if (pickedImageUrl == null) {
+            Toast.makeText(this, "Select a profile picture", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
 
     }
 
@@ -277,4 +422,5 @@ public class SignUp extends AppCompatActivity {
         startActivity(a);
     }
 }
+
 

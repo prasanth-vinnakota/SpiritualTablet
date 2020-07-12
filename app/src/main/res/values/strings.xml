@@ -154,5 +154,57 @@
     <string name="spiritual_tablets_workshop_at_madugulla">Spiritual tablets workshop at Madugulla</string>
     <string name="unknown_gallery_name">Unknown Gallery Name</string>
     <string name="book_title">Book Title</string>
+    <string name="july_2018">July 2018</string>
+    <string name="january_2018">January 2018</string>
+    <string name="january_2016">January 2016</string>
+    <string name="may_2016">May 2016</string>
+    <string name="september_2016">September 2016</string>
+    <string name="october_2015">October 2015</string>
+    <string name="august_2015">August 2015</string>
+    <string name="july_2015">July 2015</string>
+    <string name="april_2015">April 2015</string>
+    <string name="january_2015">January 2015</string>
+    <string name="september_2014">September 2014</string>
+    <string name="july_2014">July 2014</string>
+    <string name="february_2014">February 2014</string>
+    <string name="july_2013">July 2013</string>
+    <string name="may_2013">May 2013</string>
+    <string name="december_2012">December 2012</string>
+    <string name="april_2013">April 2013</string>
+    <string name="more">More</string>
+    <string name="daily_tip">Daily Tip</string>
+    <string name="blog">Blog</string>
+    <string name="title_activity_home">Home</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="communicate">Communicate</string>
+    <string name="share">Share</string>
+    <string name="title">Title</string>
+    <string name="description">Describe the post</string>
+    <string name="loading">Loading…</string>
+    <string name="comment">Comment</string>
+    <string name="_10_20">10:20</string>
+    <string name="text_comment_goes_here">Text Comment Goes Here</string>
+    <string name="large_description">Definition of something. (Entry 1 of 2) 1a : some indeterminate or unspecified thing. b : some indeterminate amount more than a specified number —used in combinationtwenty-something years olda group of fifty-somethings. 2 : a person or thing of consequence</string>
+    <string name="post">Post</string>
+    <string name="delete_post">Delete Post?</string>
+    <string name="this_can_t_be_undone_and_it_will_be_removed_in_your_profile_and_timeline">This can\'t be undone and it will be removed in your profile and timeline</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

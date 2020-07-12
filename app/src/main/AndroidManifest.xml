@@ -5,6 +5,8 @@
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,23 +16,32 @@
         android:roundIcon="@drawable/full_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TeluguBookList"/>
-        <activity android:name=".EnglishBookList" />
-        <activity android:name=".VideoPlayer" />
-        <activity android:name=".Gallery" />
-        <activity android:name=".PrimaryCenters" />
-        <activity android:name=".ContactUs" />
-        <activity android:name=".Organisation" />
-        <activity android:name=".Outlets" />
-        <activity android:name=".PyramidDoctors" />
-        <activity android:name=".Founder" />
-        <activity android:name=".Principle" />
-        <activity android:name=".History" />
-        <activity android:name=".Introduction" />
-        <activity android:name=".VideoList" />
-        <activity android:name=".About" />
-        <activity android:name=".Player" />
-        <activity android:name=".AudioActivity" />
+        <activity android:name=".PostDetailActivity"/>
+        <activity
+            android:name=".Home"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Blog" />
+        <activity android:name=".DailyTip" />
+        <activity android:name=".DashBoard2" />
+        <activity android:name=".dashboard.NewsLetters" />
+        <activity android:name=".dashboard.TeluguBookList" />
+        <activity android:name=".dashboard.EnglishBookList" />
+        <activity android:name=".players.VideoPlayer" />
+        <activity android:name=".dashboard.Gallery" />
+        <activity android:name=".about.PrimaryCenters" />
+        <activity android:name=".dashboard.ContactUs" />
+        <activity android:name=".about.Organisation" />
+        <activity android:name=".about.Outlets" />
+        <activity android:name=".about.PyramidDoctors" />
+        <activity android:name=".about.Founder" />
+        <activity android:name=".about.Principle" />
+        <activity android:name=".about.History" />
+        <activity android:name=".about.Introduction" />
+        <activity android:name=".dashboard.VideoList" />
+        <activity android:name=".dashboard.About" />
+        <activity android:name=".players.AudioPlayer" />
+        <activity android:name=".dashboard.AudioActivity" />
         <activity android:name=".ViewBook" />
         <activity android:name=".NoInternet" />
         <activity android:name=".DashBoard" />
@@ -43,8 +54,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
 
-        <service android:name=".MyMessagingService">
+        <service android:name=".services.MyMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

@@ -3,6 +3,8 @@ package com.example.spiritualtablet;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -26,6 +28,7 @@ import java.net.URL;
 public class ViewBook extends AppCompatActivity {
 
     private static PDFView pdfView;
+    static LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +40,18 @@ public class ViewBook extends AppCompatActivity {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Books").child(getIntent().getStringExtra("language")).child(getIntent().getStringExtra("book_name"));
 
-        Toast.makeText(getApplicationContext(), "Loading "+getIntent().getStringExtra("book_name"),Toast.LENGTH_LONG).show();
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoading();
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String url = dataSnapshot.getValue(String.class);
+             /*   Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent); */
                 new RetrievePdfStream().execute(url);
+
             }
 
             @Override
@@ -68,12 +76,14 @@ public class ViewBook extends AppCompatActivity {
             } catch (IOException e) {
                 return null;
             }
+
             return inputStream;
         }
 
         @Override
         protected void onPostExecute(InputStream inputStream) {
             pdfView.fromStream(inputStream).load();
+            loadingDialog.dismiss();
         }
     }
 }
